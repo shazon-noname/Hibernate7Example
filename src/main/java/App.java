@@ -2,6 +2,7 @@ import Models.Course;
 import Models.DTO.StudentCourseInfo;
 import Models.DTO.TeachersInfo;
 import Services.CourseService;
+import Services.PurchaseListService;
 import Services.StudentService;
 import Services.TeacherService;
 import Util.TableDatabase;
@@ -35,6 +36,8 @@ public class App {
 
             List<Course> ux = CourseService.selectCourse("UX");
             ux.forEach(System.out::println);
+
+            PurchaseListService.populateLinkedPurchaseListWithJoin();
 
             transaction.commit();
         }

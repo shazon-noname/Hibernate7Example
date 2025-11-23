@@ -56,10 +56,10 @@ public class PurchaseListService {
         CriteriaQuery<Subscription> query = criteriaBuilder.createQuery(Subscription.class);
         Root<Subscription> rootSubscription = query.from(Subscription.class);
 
-        rootSubscription.join("student_id");
-        rootSubscription.join("course_id");
+        rootSubscription.join("studentId");
+        rootSubscription.join("courseId");
 
-        query.where(criteriaBuilder.gt(rootSubscription.get("course_id").get("price"), 1000));
+        query.where(criteriaBuilder.gt(rootSubscription.get("courseId").get("price"), 1000));
 
         List<Subscription> resultList = entityManager.createQuery(query).getResultList();
 
