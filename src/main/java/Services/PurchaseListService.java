@@ -1,7 +1,6 @@
 package Services;
 
 import Models.*;
-import Util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -10,9 +9,7 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 
 public class PurchaseListService {
-    public static void populateLinkedPurchaseList() {
-        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-
+    public static void populateLinkedPurchaseList(EntityManager entityManager) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PurchaseList> purchaseListCriteriaQuery = criteriaBuilder.createQuery(PurchaseList.class);
         Root<PurchaseList> purchaseListRoot = purchaseListCriteriaQuery.from(PurchaseList.class);
@@ -43,32 +40,6 @@ public class PurchaseListService {
             linkedPurchaseList.setId(linkedPurchaseListKey);
 
             entityManager.persist(linkedPurchaseList);
-
-            entityManager.close();
         }
-    }
-
-
-    public static void populateLinkedPurchaseListWithJoin() {
-        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Subscription> query = criteriaBuilder.createQuery(Subscription.class);
-        Root<Subscription> rootSubscription = query.from(Subscription.class);
-
-        rootSubscription.join("studentId");
-        rootSubscription.join("courseId");
-
-        query.where(criteriaBuilder.gt(rootSubscription.get("courseId").get("price"), 1000));
-
-        List<Subscription> resultList = entityManager.createQuery(query).getResultList();
-
-        for (Subscription s : resultList) {
-            System.out.println(
-                    s.getStudentId().getName() + " -> " +  s.getCourseId().getName()
-            );
-        }
-
-        entityManager.close();
     }
 }

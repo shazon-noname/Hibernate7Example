@@ -5,7 +5,6 @@ import Models.DTO.StudentCourseInfo;
 import Models.Student;
 import Models.Subscription;
 import Models.Teacher;
-import Util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -17,9 +16,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 public class StudentService {
-    public static List<StudentCourseInfo> fetchDetailedStudentInfo(String courseName, int age, int price, int salary) {
-        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-
+    public static List<StudentCourseInfo> fetchDetailedStudentInfo(EntityManager entityManager, String courseName, int age, int price, int salary) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> query = criteriaBuilder.createQuery(Tuple.class);
 
@@ -60,8 +57,6 @@ public class StudentService {
         ));
 
         List<Tuple> resultList = entityManager.createQuery(query).getResultList();
-
-        entityManager.close();
 
         return resultList.stream()
                 .map(tuple ->

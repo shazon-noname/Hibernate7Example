@@ -1,10 +1,7 @@
 import Models.Course;
 import Models.DTO.StudentCourseInfo;
 import Models.DTO.TeachersInfo;
-import Services.CourseService;
-import Services.PurchaseListService;
-import Services.StudentService;
-import Services.TeacherService;
+import Services.*;
 import Util.TableDatabase;
 import Util.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -21,7 +18,9 @@ public class App {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
 
-            LinkedHashMap<String, Integer> allCourse = CourseService.findAllCourse();
+//            PurchaseListService.populateLinkedPurchaseList(entityManager);
+
+            LinkedHashMap<String, Integer> allCourse = CourseService.findAllCourse(entityManager);
             LinkedHashMap<String, Integer> sortedAllCourse = CourseService.sortingAllCourseDesc(allCourse);
             sortedAllCourse.forEach((name, price) -> System.out.println(name + " - " + price));
 
@@ -30,14 +29,15 @@ public class App {
             teachersInfo.forEach(System.out::println);
 
 
-            List<StudentCourseInfo> studentCourseInfos = StudentService.fetchDetailedStudentInfo( "Java", 18, 1000, 5000);
+            List<StudentCourseInfo> studentCourseInfos = StudentService.fetchDetailedStudentInfo( entityManager, "Java", 18, 1000, 5000);
             studentCourseInfos.forEach(System.out::println);
 
 
-            List<Course> ux = CourseService.selectCourse("UX");
+            List<Course> ux = CourseService.selectCourse(entityManager,"UX");
             ux.forEach(System.out::println);
 
-            PurchaseListService.populateLinkedPurchaseListWithJoin();
+            SubscriptionService.populateSubscriptionListWithJoin(entityManager);
+
 
             transaction.commit();
         }

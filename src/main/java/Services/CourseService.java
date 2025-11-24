@@ -1,7 +1,6 @@
 package Services;
 
 import Models.Course;
-import Util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
@@ -17,8 +16,7 @@ import java.util.stream.Collectors;
 
 public class CourseService {
 
-    public static LinkedHashMap<String, Integer> findAllCourse() {
-        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+    public static LinkedHashMap<String, Integer> findAllCourse(EntityManager entityManager) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> query = criteriaBuilder.createQuery(Tuple.class);
 
@@ -39,7 +37,6 @@ public class CourseService {
             result.put(name, price);
         }
 
-        entityManager.close();
         return result;
     }
 
@@ -55,9 +52,7 @@ public class CourseService {
                 ));
     }
 
-    public static List<Course> selectCourse(String name) {
-        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
-
+    public static List<Course> selectCourse(EntityManager entityManager, String name) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Course> courseCriteriaQuery = criteriaBuilder.createQuery(Course.class);
         Root<Course> courseRoot = courseCriteriaQuery.from(Course.class);
@@ -68,9 +63,6 @@ public class CourseService {
         TypedQuery<Course> query = entityManager.createQuery(courseCriteriaQuery);
         query.setParameter("courseName", "%" + name + "%");
 
-        List<Course> resultList = query.getResultList();
-        entityManager.close();
-
-        return resultList;
+        return query.getResultList();
     }
 }
