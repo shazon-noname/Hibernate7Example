@@ -43,6 +43,12 @@ public class App {
                     SubscriptionService.findBySubscriptionDate(entityManager, LocalDate.of(2018, 1, 2));
             result.forEach(System.out::println);
 
+            StudentService.getTotalStudents(entityManager);
+
+            TeacherService.getMaxSalaryOfTeachers(entityManager);
+            TeacherService.getAvgSalaryOfTeachers(entityManager);
+            TeacherService.getSumSalaryOfTeachers(entityManager);
+
             transaction.commit();
         }
     }

@@ -79,7 +79,17 @@ public class StudentService {
                                     .toLocalDate()
                     );
                 }).toList();
+    }
 
+    public static void getTotalStudents(EntityManager entityManager) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+        Root<Student> studentRoot = query.from(Student.class);
+
+        query.select(criteriaBuilder.count(studentRoot));
+
+        Long singleResult = entityManager.createQuery(query).getSingleResult();
+        System.out.println("Total number of students : " + singleResult);
     }
 }
 
