@@ -7,6 +7,7 @@ import Util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class App {
 
             SubscriptionService.populateSubscriptionListWithJoin(entityManager);
 
+            List<StudentCourseInfo> result =
+                    SubscriptionService.findBySubscriptionDate(entityManager, LocalDate.of(2018, 1, 2));
+            result.forEach(System.out::println);
 
             transaction.commit();
         }

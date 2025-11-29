@@ -13,10 +13,10 @@ public class Subscription {
     SubscriptionKey id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private Student studentId;
+    private Student student;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", insertable = false, updatable = false)
-    private Course courseId;
+    private Course course;
     @Column(name = "subscription_date")
     Date subscriptionDate;
 }

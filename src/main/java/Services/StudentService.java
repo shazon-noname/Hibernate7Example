@@ -45,8 +45,8 @@ public class StudentService {
         Predicate teacherRestriction = criteriaBuilder.equal(teacherRoot.get("salary"), salary);
 
         Predicate subscriptionRestriction = criteriaBuilder.and(
-                criteriaBuilder.equal(subscriptionRoot.get("studentId"), studentRoot),
-                criteriaBuilder.equal(subscriptionRoot.get("courseId"), courseRoot)
+                criteriaBuilder.equal(subscriptionRoot.get("student"), studentRoot),
+                criteriaBuilder.equal(subscriptionRoot.get("course"), courseRoot)
         );
 
         query.where(criteriaBuilder.and(
