@@ -50,6 +50,7 @@ public class App {
             TeacherService.getSumSalaryOfTeachers(entityManager);
             TeacherService.getTotalDistinctNoOfEmployees(entityManager);
 
+            TeachersStatisticsInfoService.getTeachersSalaryStatistics(entityManager);
             transaction.commit();
         }
     }
