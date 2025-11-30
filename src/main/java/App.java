@@ -48,6 +48,7 @@ public class App {
             TeacherService.getMaxSalaryOfTeachers(entityManager);
             TeacherService.getAvgSalaryOfTeachers(entityManager);
             TeacherService.getSumSalaryOfTeachers(entityManager);
+            TeacherService.getTotalDistinctNoOfEmployees(entityManager);
 
             transaction.commit();
         }

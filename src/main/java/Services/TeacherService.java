@@ -78,4 +78,15 @@ public class TeacherService {
 
         System.out.println("Sum salary : " + singleResult);
     }
+
+    public static void getTotalDistinctNoOfEmployees(EntityManager entityManager) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+        Root<Teacher> studentRoot = query.from(Teacher.class);
+
+        query.select(criteriaBuilder.countDistinct(studentRoot)); // countDistinct() return unique element
+
+        Long singleResult = entityManager.createQuery(query).getSingleResult();
+        System.out.println("Total number of unique teachers : " + singleResult);
+    }
 }
