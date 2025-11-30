@@ -24,7 +24,7 @@ public class TeacherService {
                         agePath,
                         namePath,
                         salaryPath
-                )).groupBy(agePath,namePath, salaryPath);
+                )).groupBy(agePath, namePath, salaryPath);
 
         return entityManager.createQuery(query).getResultList();
     }
@@ -50,8 +50,8 @@ public class TeacherService {
         List<Tuple> resultList = entityManager.createQuery(query).getResultList();
 
         resultList.forEach(t ->
-                        System.out.println("Name: " + t.get("name") + " = Salary: " + t.get("salary"))
-                );
+                System.out.println("Name: " + t.get("name") + " = Salary: " + t.get("salary"))
+        );
     }
 
     public static void getAvgSalaryOfTeachers(EntityManager entityManager) {

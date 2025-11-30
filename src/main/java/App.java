@@ -51,6 +51,8 @@ public class App {
             TeacherService.getTotalDistinctNoOfEmployees(entityManager);
 
             TeachersStatisticsInfoService.getTeachersSalaryStatistics(entityManager);
+
+            CriteriaJoinService.getInfoStudents(entityManager);
             transaction.commit();
         }
     }
