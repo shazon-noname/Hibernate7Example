@@ -53,6 +53,8 @@ public class App {
             TeachersStatisticsInfoService.getTeachersSalaryStatistics(entityManager);
 
             CriteriaJoinService.getInfoStudents(entityManager);
+
+            TeacherService.getMaxSalaryByAge(entityManager, 5000);
             transaction.commit();
         }
     }

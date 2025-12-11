@@ -89,4 +89,25 @@ public class TeacherService {
         Long singleResult = entityManager.createQuery(query).getSingleResult();
         System.out.println("Total number of unique teachers : " + singleResult);
     }
+
+    public static void getMaxSalaryByAge(EntityManager entityManager, int greaterSalary) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = criteriaBuilder.createQuery(Tuple.class);
+        Root<Teacher> root = query.from(Teacher.class);
+
+        Expression<Integer> maxSalary = criteriaBuilder.max(root.get("salary").as(Integer.class));
+
+        query.select(criteriaBuilder.tuple(
+                        root.get("age").alias("age"),
+                        maxSalary.alias("maxSalary"))
+                ).groupBy(root.get("age"))
+                .having(criteriaBuilder.greaterThan(maxSalary, greaterSalary))
+                .orderBy(criteriaBuilder.desc(maxSalary));
+
+        List<Tuple> resultList = entityManager.createQuery(query).getResultList();
+
+        for (Tuple tuple : resultList) {
+            System.out.println("Age: " + tuple.get("age") + " - Max salary = " + tuple.get("maxSalary"));
+        }
+    }
 }
