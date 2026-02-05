@@ -14,6 +14,7 @@ public class TableDatabase {
     public static void initDatabase() {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             Statement statement = connection.createStatement();
+            //noinspection SqlDialectInspection
             statement.execute("CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME);
             System.out.println("DATABASE checked/created: " + DATABASE_NAME);
         } catch (SQLException e) {
